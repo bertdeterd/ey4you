@@ -1,5 +1,17 @@
 # Getting Started
 
+
+## Local
+root package.json cds.requires.db.kind <br>
+sql = sqlite memory or hana (deployed)<br>
+sqlite = local sqlite db<br>
+
+initial data<br>
+namespace-entity.csv
+
+
+## vv
+
 Welcome to your new project.
 
 It contains these folders and files, following our recommended project layout:

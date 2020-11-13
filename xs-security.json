@@ -1,0 +1,48 @@
+{
+    "xsappname": "eye-you",
+    "tenant-mode": "dedicated",
+    "description": "E4Y Authorization Model",
+    "authorities": [
+        "$ACCEPT_GRANTED_AUTHORITIES"
+    ],
+    "foreign-scope-references": [
+        "$ACCEPT_GRANTED_SCOPES"
+    ],
+    "scopes": [
+        {
+            "name": "uaa.user",
+            "description": "UAA"
+        },
+        {
+            "name": "$XSAPPNAME.admin",
+            "description": "E4Y Administrator"
+        },
+        {
+            "name": "$XSAPPNAME.editPatients",
+            "description": "E4Y Edit Patients"
+        }
+    ],
+    "role-templates": [
+        {
+            "name": "E4Y-user",
+            "description": "E4Y user",
+            "scope-references": [
+                "uaa.user"
+            ]
+        },
+        {
+            "name": "E4Y-Patients-Editor",
+            "description": "E4Y Edit Patients",
+            "scope-references": [
+                "$XSAPPNAME.editPatients"
+            ]
+        },
+        {
+            "name": "E4Y-Admin",
+            "description": "E4Y Administrator",
+            "scope-references": [
+                "$XSAPPNAME.admin"
+            ]
+        }
+    ]
+}

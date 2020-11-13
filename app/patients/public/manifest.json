@@ -1,0 +1,31 @@
+{
+    "_version": "1.9.0",
+    "sap.cloud": {
+      "public": true,
+      "service": "eye-you"
+    },
+    "sap.app": {
+      "id": "patients",
+      "type": "application",
+      "applicationVersion": {
+        "version": "1.0.0"
+      },
+      "crossNavigation": {
+        "inbounds": {
+          "intent1": {
+            "signature": {
+              "parameters": {},
+              "additionalParameters": "allowed"
+            },
+            "semanticObject": "Dynamic",
+            "action": "display",
+            "title": "Patients",
+            "info": "Patients",
+            "subTitle": "Patients",
+            "icon": "sap-icon://account"
+          }
+        }
+      }
+        
+    }
+  }

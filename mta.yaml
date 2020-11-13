@@ -1,0 +1,111 @@
+## Generated mta.yaml based on template version 0.4.0
+## language=nodejs; multiTenant=false
+_schema-version: '3.1'
+ID: eye-you
+version: 1.0.0
+description: "Eye 4 You Project"
+parameters:
+  enable-parallel-deployments: true
+   
+build-parameters:
+  before-all:
+   - builder: custom
+     commands:
+      - npm install --production
+      - npx -p @sap/cds-dk cds build --production
+
+modules:
+ # --------------------- SERVER MODULE ------------------------
+ - name: eye-srv
+ # ------------------------------------------------------------
+   type: nodejs
+   path: gen/srv
+   provides:
+    - name: eye-srv-api      
+      properties:
+        srv-url: ${default-url}
+
+ - name: eye-patient-ui
+   type: html5
+   path: app/patients
+   build-parameters:
+     builder: custom
+     commands:
+       - npm run build
+       - npm run zip
+     build-result: dist
+     supported-platforms: []
+
+ - name: eye-patient-ui-deployer
+   type: com.sap.application.content
+   path: .
+   requires:
+     - name: eye_patient_html_host
+       parameters:
+         content-target: true
+   build-parameters:
+     build-result: mta_resources
+     requires:
+       - name: eye-patient-ui
+         artifacts:
+           - patientapp-content.zip
+         target-path: mta_resources/
+
+     
+ - name: eye-patient-ui-destination
+   type: com.sap.application.content
+   requires:
+   - name: eye_uaa 
+     parameters:
+       service-key:
+         name: eye_uaa-key
+   - name: eye_patient_html_host
+     parameters:
+       service-key:
+         name: eye_patient_html_host-key
+   - name: eye_patient_destination
+     parameters:
+       content-target: true
+   parameters:
+     content:
+       subaccount:
+         existing_destinations_policy: update
+         destinations:
+         - Name: eye_patient_dest_html_host
+           ServiceInstanceName: eye_patient_html_host
+           ServiceKeyName: eye_patient_html_host-key
+           sap.cloud.service: eye-you
+         - Name: eye_patient_dest_tokenexchange
+           Authentication: OAuth2UserTokenExchange
+           ServiceInstanceName: eye_uaa
+           ServiceKeyName: eye_uaa-key
+           sap.cloud.service: eye-you
+   build-parameters:
+     no-source: true
+
+resources:
+  - name: eye_uaa
+    type: org.cloudfoundry.managed-service
+    parameters:
+      path: ./xs-security.json
+      service-plan: application
+      service-name: eye_uaa
+      service: xsuaa
+  - name: eye_patient_destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-name: eye_patient_destination
+      service-plan: lite      
+  - name: eye_patient_html_host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: eye_patient_html_host
+      service-plan: app-host
+  - name: eye_patient_html_runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
+

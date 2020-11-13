@@ -1,18 +1,39 @@
 {
   "name": "eye4you",
   "version": "1.0.0",
-  "description": "A simple CAP project.",
-  "repository": "<Add your repository here>",
+  "description": "E4Y CAP",
+  "repository": "https://github.com/bertdeterd/ey4you",
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
     "@sap/cds": "^4",
-    "express": "^4"
+    "express": "^4",
+    "@sap/hana-client": "^2.4.177"
   },
   "devDependencies": {
     "sqlite3": "^5"
   },
   "scripts": {
-    "start": "npx cds run"
+    "start": "npx cds run",
+    "build:cds": "cds build/all --clean",
+    "build:mta": "mbt build",
+    "deploy:cds": "cds deploy --to sqlite",
+    "deploy:hana": "cds deploy --to hana",
+    "predeploy:cf": "mbt build",
+    "deploy:cf": "cf deploy mta_archives/eye-you_1.0.0.mtar",
+    "serve:cds": "cds watch",
+    "preserve:approuter": "cd approuter",
+    "serve:approuter": "npm start"
+  },
+  "cds": {
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "model": "*"
+      }
+    }
   }
 }
