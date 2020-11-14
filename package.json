@@ -7,8 +7,9 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^4",
+    "@sap/hana-client": "^2.4.177",
     "express": "^4",
-    "@sap/hana-client": "^2.4.177"
+    "sap-cds-ddic": "^1.0.4"
   },
   "devDependencies": {
     "sqlite3": "^5"
