@@ -1,13 +1,12 @@
-using { eye.you as eye } from '../db/schema';
+using {eye.you as eye} from '../db/schema';
 
-service AccountService 
+service AccountService
 //@(requires:'authenticated-user')
 
 {
+    @odata.draft.enabled : true
+    entity Patients as projection on eye.Patients;
 
- //@odata.draft.enabled
- entity Patients as projection on eye.Patients;
-
- entity Doctors as projection on eye.Doctors;
+    entity Doctors  as projection on eye.Doctors;
 
 }
