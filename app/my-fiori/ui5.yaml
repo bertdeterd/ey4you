@@ -3,6 +3,18 @@ metadata:
   name: 'my-fiori'
 type: application
 ui5Theme: sap_fiori_3
+resources:
+  configuration:
+    paths:
+      webapp: webapp
+builder:
+  customTasks:
+    - name: "ui5-task-zipper"
+      afterTask: "uglify"
+      configuration:
+        archiveName: "uimodule"
+        additionalFiles:
+          - webapp/xs-app.json        
 server:
   customMiddleware:
     - name: fiori-tools-proxy

@@ -5,7 +5,7 @@
     {
       "source": "^/api/(.*)",
       "target": "$1",
-      "destination": "eye-patient-srv"
+      "destination": "eye-srv-api"
     },
     {
       "authenticationType": "xsuaa",

@@ -1,0 +1,17 @@
+{
+    "welcomeFile": "flpSandbox.html",
+    "routes": [
+        {
+            "source": "^/v2/account/(.*)$",
+            "authenticationType": "none",
+            "destination": "eye-srv-api",
+            "csrfProtection": false
+        },
+        {
+            "source": "^(.*)",
+            "target": "$1",
+            "authenticationType": "xsuaa",
+            "service": "html5-apps-repo-rt"
+        }
+    ]
+}

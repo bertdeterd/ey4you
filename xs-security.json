@@ -24,21 +24,21 @@
     ],
     "role-templates": [
         {
-            "name": "E4Y-user",
+            "name": "E4Y_user",
             "description": "E4Y user",
             "scope-references": [
                 "uaa.user"
             ]
         },
         {
-            "name": "E4Y-Patients-Editor",
+            "name": "E4Y_Patients_Editor",
             "description": "E4Y Edit Patients",
             "scope-references": [
                 "$XSAPPNAME.editPatients"
             ]
         },
         {
-            "name": "E4Y-Admin",
+            "name": "E4Y_Admin",
             "description": "E4Y Administrator",
             "scope-references": [
                 "$XSAPPNAME.admin"

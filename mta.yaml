@@ -15,15 +15,27 @@ build-parameters:
       - npx -p @sap/cds-dk cds build --production
 
 modules:
- # --------------------- SERVER MODULE ------------------------
+
+  
+ - name: eye-db
+   type: hdb
+   path: gen/db
+   parameters:
+     memory: 256M
+     disk-quota: 256M
+   requires:
+     - name: eye_hdicontainer  
+ 
  - name: eye-srv
- # ------------------------------------------------------------
    type: nodejs
    path: gen/srv
+   requires:
+     - name: eye_hdicontainer
+     - name: eye_uaa   
    provides:
-    - name: eye-srv-api      
-      properties:
-        srv-url: ${default-url}
+     - name: eye-srv-api-provider      
+       properties:
+         srv-url: ${default-url}
 
  - name: eye-patient-ui
    type: html5
@@ -91,6 +103,13 @@ resources:
       service-plan: application
       service-name: eye_uaa
       service: xsuaa
+  - name: eye_hdicontainer
+    type: com.sap.xs.hdi-container
+    parameters:
+      service-plan: hdi-shared
+      service: hana
+    properties:
+      hdi-container-name: ${service-name}          
   - name: eye_patient_destination
     type: org.cloudfoundry.managed-service
     parameters:
@@ -108,4 +127,24 @@ resources:
     parameters:
       service-plan: app-runtime
       service: html5-apps-repo
+  - name: eye_html5_destinations
+    type: org.cloudfoundry.managed-service
+    requires: 
+      - name: eye-srv-api-provider 
+    parameters:
+      service: destination
+      service-plan: lite
+      config:
+        init_data: 
+          subaccount: 
+            existing_destinations_policy: update
+            destinations: 
+            - Name: eye-srv-api
+              Description: My Hana Cloud oData services
+              Authentication: NoAuthentication
+              ProxyType: Internet
+              Type: HTTP
+              URL: ~{eye-srv-api-provider/srv-url}
+              HTML5.DynamicDestination: true
+              ForwardAuthToken: true      
 

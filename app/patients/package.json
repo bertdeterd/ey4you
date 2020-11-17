@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "deploy": "cf html5-push ./dist  63e7e8e8-14a2-413d-854d-9988371bc0b2",
     "zip": "cd dist && bestzip ../../../mta_resources/patientapp-content.zip *"
   },
   "dependencies": {
