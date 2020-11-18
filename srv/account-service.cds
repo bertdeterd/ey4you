@@ -4,7 +4,8 @@ service AccountService
 @(requires:'authenticated-user')
 
 {
-    @odata.draft.enabled : true
+    //@odata.draft.enabled : true
+    
     entity Patients as projection on eye.Patients;
 
     entity Doctors  as projection on eye.Doctors;

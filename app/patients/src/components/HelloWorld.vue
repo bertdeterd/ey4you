@@ -1,58 +1,73 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+  <v-container fluid>
+    <v-row>
+      <v-col>
+      <v-data-table :headers="headers" :items="patientslist"></v-data-table>
+      </v-col><v-col>
+          <v-sheet>
+      <v-text-field v-model="lname" label="achternaam"></v-text-field>
+      <v-btn @click="createPatient">Create</v-btn>
+    </v-sheet>
+        </v-col>
+    </v-row>
+
+    <v-row>
+        <v-btn @click="getRule">get Rule</v-btn>
+      </v-row>
+
+  
+
+  </v-container>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  }
-}
-</script>
+  name: "HelloWorld",
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+  data: () => ({
+    patientslist: [],
+    lname: "",
+    headers: [{ text: "Achternaam", value: "lastName" }, { text: "ID", value: "ID" }],
+  }),
+
+  methods: {
+    async createPatient() {
+      const _body = JSON.stringify({ lastName: this.lname });
+      const _hdr = {
+        "Content-Type": "application/json;odata.metadata=minimal",
+        "OData-Version": "4.0",
+        Accept: "application/json",
+      };
+
+      const r = await fetch("api/account/Patients", {
+        method: "post",
+        headers: _hdr,
+        body: _body,
+      });
+      const d = await r.json();
+      console.log(d);
+      window.alert(d.ID);
+      this.getPatients()
+    },
+
+    async getPatients() {
+      const resp = await fetch("api/account/Patients");
+      const _data = await resp.json();
+      this.patientslist = _data.value;
+    },
+
+      async getRule() {
+      const resp = await fetch("func/determine-dvocode?orderreason=Z09");
+      const _data = await resp.json();
+      
+      console.log(_data)
+      //this.patientslist = _data.value;
+    },
+
+  },
+
+  created() {
+    this.getPatients()
+  },
+};
+</script>

@@ -5,8 +5,19 @@
     {
       "source": "^/api/(.*)",
       "target": "$1",
-      "destination": "eye-srv-api"
+      "destination": "eye-srv-api",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
     },
+
+    {
+      "source": "^/func/(.*)",
+      "target": "$1",
+      "destination": "eye-functions",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
+
     {
       "authenticationType": "xsuaa",
       "source": "^(.*)$",
