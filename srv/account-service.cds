@@ -1,7 +1,7 @@
 using {eye.you as eye} from '../db/schema';
 
 service AccountService 
-@(requires:'authenticated-user')
+//@(requires:'authenticated-user')
 
 {
     //@odata.draft.enabled : true

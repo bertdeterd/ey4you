@@ -11,6 +11,23 @@
     },
 
     {
+      "source": "^/token/(.*)",
+      "target": "/oauth2/token",
+      "destination": "testing",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
+
+    {
+      "source": "^/rule/(.*)",
+      "target": "$1",
+      "destination": "functions",
+      "authenticationType": "none",
+      "csrfProtection": false
+    },
+
+
+    {
       "source": "^/func/(.*)",
       "target": "$1",
       "destination": "eye-functions",
