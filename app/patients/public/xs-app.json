@@ -13,7 +13,7 @@
     {
       "source": "^/token/(.*)",
       "target": "/oauth2/token",
-      "destination": "testing",
+      "destination": "kyma-function-token",
       "authenticationType": "none",
       "csrfProtection": false
     },
@@ -21,7 +21,7 @@
     {
       "source": "^/rule/(.*)",
       "target": "$1",
-      "destination": "functions",
+      "destination": "eye-serverless-functions",
       "authenticationType": "none",
       "csrfProtection": false
     },
@@ -33,6 +33,7 @@
       "destination": "eye-functions",
       "authenticationType": "none",
       "csrfProtection": false
+      
     },
 
     {

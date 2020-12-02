@@ -1,0 +1,17 @@
+apiVersion: gateway.kyma-project.io/v1alpha1
+kind: APIRule
+metadata:
+  name: vscode-dvocode
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  rules:
+    - path: /.*
+      accessStrategies:
+        - config: {}
+          handler: noop
+      methods:
+        - GET
+  service:
+    host: bertdeterd
+    name: determine-vs-dvocode
+    port: 80

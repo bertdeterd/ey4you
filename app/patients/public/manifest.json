@@ -18,11 +18,7 @@
               "additionalParameters": "allowed"
             },
             "semanticObject": "Dynamic",
-            "action": "display",
-            "title": "Patients",
-            "info": "Patients",
-            "subTitle": "Patients",
-            "icon": "sap-icon://account"
+            "action": "display"
           }
         }
       }

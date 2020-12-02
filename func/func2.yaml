@@ -1,0 +1,26 @@
+apiVersion: serverless.kyma-project.io/v1alpha1
+kind: Function
+metadata:
+  name: s4hana-materialstock
+  labels:
+    app: s4hana-materialstock
+spec:
+  source: "module.exports = {main: function (event, context) { return 'XX'}}"
+---
+apiVersion: gateway.kyma-project.io/v1alpha1
+kind: APIRule
+metadata:
+  name: s4hana-materialstock
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  rules:
+    - path: /.*
+      accessStrategies:
+        - config: {}
+          handler: noop
+      methods:
+        - GET
+  service:
+    host: s4hana-materialstock
+    name: s4hana-materialstock
+    port: 80
